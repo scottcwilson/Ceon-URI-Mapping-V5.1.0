@@ -378,12 +378,12 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		
 		$uri_mapping_input_fields = zen_draw_separator('pixel_black.gif', '100%', '2');
 		
-		$uri_mapping_input_fields .= '<table border="0" cellspacing="0" cellpadding="0">' . "\n\t";
+		$uri_mapping_input_fields .= '<table width="100%" border="0" cellspacing="0" cellpadding="0">' . "\n\t";//steve added width 100%
 		$uri_mapping_input_fields .= '<tr>' . "\n\t\t" .
-			'<td rowspan="2" class="main" valign="top" style="width: 10em; padding-top: 0.5em;">';
+			'<td class="main" valign="top" style="padding-top: 0.5em;"><b>';//steve removed rowspan and width: 10em; added b
 		
-		$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_MANUFACTURER_URI . '</td>' . "\n\t\t" .
-			'<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">' . "\n";
+		$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_MANUFACTURER_URI . '</b></td>' . "\n\t</tr>\n\t" . //steve added closing tr and opening tr
+			'<tr>' . "\n\t\t" . '<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">' . "\n";
 		
 		for ($i = 0, $n = count($languages); $i < $n; $i++) {
 			$uri_mapping_input_fields .= "<p>";
@@ -398,7 +398,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 			$uri_mapping_input_fields .= zen_image(DIR_WS_CATALOG_LANGUAGES . $languages[$i]['directory'] .
 				'/images/' . $languages[$i]['image'], $languages[$i]['name']) . '&nbsp;' .
 				zen_draw_input_field('uri-mappings[' . $languages[$i]['id'] . ']',
-				$prev_uri_mappings[$languages[$i]['id']], 'size="60"');
+				$prev_uri_mappings[$languages[$i]['id']], 'class="form-control"');//steve removed size="60" add form-control
 			
 			$uri_mapping_input_fields .= "</p>\n";
 		}
@@ -468,12 +468,12 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		
 		$uri_mapping_input_fields .= zen_draw_separator('pixel_black.gif', '100%', '2');
 		
-/*		$uri_mapping_input_fields .= '<table border="0" cellspacing="0" cellpadding="0">' . "\n\t";
+		$uri_mapping_input_fields .= '<table width="100%" border="0" cellspacing="0" cellpadding="0">' . "\n\t"; //steve added width
 		$uri_mapping_input_fields .= '<tr>' . "\n\t\t" .
-			'<td rowspan="2" class="main" valign="top" style="width: 10em; padding-top: 0.5em;">';*/
+			'<td class="main" valign="top" style="padding-top: 0.5em;"><b>';//steve removed rowspan, added b, removed width: 10em; 
 		
-		$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_MANUFACTURER_URI /*. '</td>' . "\n\t\t" .
-			'<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">'*/ . "\n";
+		$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_MANUFACTURER_URI . '</b></td>'  . "\n\t</tr>\n\t" . //steve added closing tr and opening tr
+            '<tr>' . "\n\t\t" . '<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">' . "\n";
 		
 		for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
 			$uri_mapping_input_fields .= "<p>";
@@ -488,13 +488,13 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 			$uri_mapping_input_fields .= zen_image(DIR_WS_CATALOG_LANGUAGES . $languages[$i]['directory'] .
 				'/images/' . $languages[$i]['image'], $languages[$i]['name']) . '&nbsp;' .
 				zen_draw_input_field('uri-mappings[' . $languages[$i]['id'] . ']',
-				$prev_uri_mappings[$languages[$i]['id']], 'class="form-control" size="60"');
+				$prev_uri_mappings[$languages[$i]['id']], 'class="form-control"');//steve removed  size="60"
 			
 			$uri_mapping_input_fields .= "</p>\n";
 		}
 		
-		$uri_mapping_input_fields .= /*'</td>' . "\n\t</tr>\n\t<tr>\n\t\t" .
-			'<td class="main" style="padding-top: 1em; padding-bottom: 0.5em;">' .*/ "\n";
+		$uri_mapping_input_fields .= '</td>' . "\n\t</tr>\n\t<tr>\n\t\t" .
+			'<td class="main" style="padding-top: 1em; padding-bottom: 0.5em;">' . "\n";
 		
 		$uri_mapping_input_fields .= "<p>";
 		
@@ -527,7 +527,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		
 		$uri_mapping_input_fields .= "</p>";
 		
-//		$uri_mapping_input_fields .= "\n\t\t</td>\n\t</tr>\n</table>\n";
+		$uri_mapping_input_fields .= "\n\t\t</td>\n\t</tr>\n</table>\n";
 		
 		$uri_mapping_input_fields .= zen_draw_separator('pixel_black.gif', '100%', '2');
 		
