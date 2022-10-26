@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * Ceon URI Mapping Config Utility Link and Configuration Group Menu Language Defines.
  *
  * @package     ceon_uri_mapping
@@ -13,5 +13,5 @@
  * @version     $Id: ceon_uri_mapping.php 1027 2012-07-17 20:31:10Z conor $
  */
 
-define('BOX_CEON_URI_MAPPING', 'Ceon URI Mapping (SEO) Config');
-define('BOX_CEON_URI_MAPPING_CONFIG_GROUP', 'Ceon URI Mapping (SEO)');
+define('BOX_CEON_URI_MAPPING', 'Ceon URI Mapping Config');
+define('BOX_CEON_URI_MAPPING_CONFIG_GROUP', 'Ceon URI Mapping');
