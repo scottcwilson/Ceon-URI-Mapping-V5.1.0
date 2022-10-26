@@ -109,7 +109,10 @@ class CeonURIMappingHREFLinkBuilder extends CeonURIMappingDBLookup
 			// This link is to a manufacturer's page
 
 			// Get the manufacturer ID
-			$pattern = '/[&\?]?(manufacturers_id=([0-9]+))/i';
+//steve was allowing 0: which eventually leads to error: strtolower(): Passing null to parameter #1 ($string) of type string is deprecated in  class.CeonString.php on line 375.
+          //pattern modified to disallow 0
+          //$pattern = '/[&\?]?(manufacturers_id=([0-9]+))/i';
+            $pattern = '/[&\?]?(manufacturers_id=([1-9]\d*))/i';
 
 			if (preg_match($pattern, $parameters, $matches)) {
 				$manufacturer_query_pair = $matches[1];
