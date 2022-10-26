@@ -28,7 +28,9 @@ window.onload = function(){
 		}
 		$ceon_uri_mapping_admin = empty($GLOBALS['ceon_uri_mapping_admin']) ? new CeonURIMappingAdminProductPages() : $GLOBALS['ceon_uri_mapping_admin'];
 	}
-	echo json_encode(utf8_encode($ceon_uri_mapping_admin->collectInfoBuildURIMappingForm())); ?>;
+//steve removed encoding
+    //echo json_encode(utf8_encode($ceon_uri_mapping_admin->collectInfoBuildURIMappingForm()));
+    echo json_encode($ceon_uri_mapping_admin->collectInfoBuildURIMappingForm()); ?>;
 	var classList = document.getElementsByClassName("<?php echo $ceon_class_name; ?>");
 	var place = classList[classList.length - 1];
 
@@ -67,8 +69,9 @@ window.onload = function(){
 	for ($i = 0, $n = count($languages); $i < $n; $i++) {
 		$ceonUriMappingPreview .= $ceon_uri_mapping_admin->productPreviewExportURIMappingInfo($languages[$i]);
 	}
-	
-	echo json_encode(utf8_encode($ceonUriMappingPreview));
+//steve removed utf8_encode...
+	//echo json_encode(utf8_encode($ceonUriMappingPreview));
+    echo json_encode($ceonUriMappingPreview);
 	 ?>;
 	var classList = document.getElementsByClassName("row");
 	var place = classList[classList.length - 4];
@@ -82,7 +85,9 @@ window.onload = function(){
 
 	var ceonUriMappingHiddenURI = document.createElement("div");
 	ceonUriMappingHiddenURI.innerHTML = <?php
-	echo json_encode(utf8_encode($ceon_uri_mapping_admin->productPreviewBuildHiddenFields()));
+//steve removed utf8_encode
+    //echo json_encode(utf8_encode($ceon_uri_mapping_admin->productPreviewBuildHiddenFields()));
+    echo json_encode($ceon_uri_mapping_admin->productPreviewBuildHiddenFields());
 	 ?>;
 	classList = document.getElementsByClassName("row text-right");
 	place = classList[classList.length - 1];
@@ -123,8 +128,9 @@ window.onload = function(){
 	foreach ($GLOBALS['contents'] as $key => $value) {
 		$text_str .= isset($value['text']) ? $value['text'] : '';
 	}
-
-	echo json_encode(utf8_encode($text_str));
+//steve removed utf-8 encode
+	//echo json_encode(utf8_encode($text_str));
+	echo json_encode($text_str);
 	// END CEON URI MAPPING 3 of 3
 ?>;
 
@@ -169,8 +175,9 @@ window.onload = function(){
 	foreach ($GLOBALS['contents'] as $key => $value) {
 		$text_str .= $value['text'];
 	}
-
-	echo json_encode(utf8_encode($text_str));
+ //steve removed utf-8 encode
+	//echo json_encode(utf8_encode($text_str));
+	echo json_encode($text_str);
 	// END CEON URI MAPPING 3 of 3
 	 ?>;
 
@@ -347,8 +354,9 @@ window.onload = function(){
 	foreach ($GLOBALS['contents'] as $key => $value) {
 		$text_str .= $value['text'];
 	}
-	
-	echo json_encode(utf8_encode($text_str));
+//steve removed encoding 
+	//echo json_encode(utf8_encode($text_str));
+    echo json_encode($text_str);
 	// END CEON URI MAPPING 3 of 3
 ?>;
 
@@ -392,8 +400,9 @@ window.onload = function(){
 	foreach ($GLOBALS['contents'] as $key => $value) {
 		$text_str .= $value['text'];
 	}
-	
-	echo json_encode(utf8_encode($text_str));
+//steve removed encoding
+	//echo json_encode(utf8_encode($text_str));
+    echo json_encode($text_str);
 	// END CEON URI MAPPING 3 of 3
 ?>;
 
