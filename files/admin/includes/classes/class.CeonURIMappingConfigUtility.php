@@ -175,10 +175,10 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	protected $_product_tell_a_friend_pages_uri_parts = array();
 
 	// }}}
-
-	
+ //steve for php 8.2
+	protected $_ask_a_question_pages_uri_parts, $_tell_a_friend_pages_uri_parts;
 	// {{{ Class Constructor
-	
+//eof
 	/**
 	 * Creates a new instance of the class. Handles the display and processing of the configuration utility. Also
 	 * instigates the installation/upgrade functionality if necessary.
