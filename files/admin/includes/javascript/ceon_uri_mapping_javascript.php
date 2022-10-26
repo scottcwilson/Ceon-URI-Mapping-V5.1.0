@@ -270,7 +270,8 @@ window.onload = function(){
 
 	var classList = document.getElementsByName("copy_as");
 	for (var i = 0, n = classList.length; i < n; i++) {
-		if (classList[i].value == "duplicate") {
+//steve strict
+		if (classList[i].value === "duplicate") {
 		   var place = classList[i].parentElement.parentElement.parentElement.nextElementSibling;
 		   break;
 		}
