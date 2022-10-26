@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * Ceon URI Mapping Shared Tabbed Panel Admin Interface Language Defines.
  *
  * @package     ceon_uri_mapping
