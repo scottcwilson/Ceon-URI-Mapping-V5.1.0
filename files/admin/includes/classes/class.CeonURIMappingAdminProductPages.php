@@ -1233,13 +1233,13 @@ class CeonURIMappingAdminProductPages extends CeonURIMappingAdminProducts
 		$dest_category_id)
 	{
 		global /*$db,*/ $messageStack;
-		
+//steve checks as per https://www.zen-cart.com/showthread.php?225478-Ceon-URI-Mapping-V5-0&p=1380289#post1380289
 		// Generate new URI mapping for this new product?
-		$this->_uri_mapping_autogen = (($_POST['uri-mapping'] == 'autogen') ? true : false);
-		
+		$this->_uri_mapping_autogen = isset($_POST['uri-mapping']) && $_POST['uri-mapping'] === 'autogen';
+
 		// Copy existing URIs from product being copied?
-		$uri_mapping_copy = (($_POST['uri-mapping'] == 'copy') ? true : false);
-		
+		$uri_mapping_copy = isset($_POST['uri-mapping']) && $_POST['uri-mapping'] === 'copy';
+
 		if ($this->_uri_mapping_autogen || $uri_mapping_copy) {
 			if ($uri_mapping_copy) {
 				// Look up and copy any URI mappings for the product being copied from
@@ -1701,8 +1701,13 @@ class CeonURIMappingAdminProductPages extends CeonURIMappingAdminProducts
 		global /*$db,*/ $messageStack;
 		
 		$languages = zen_get_languages();
-		
-		// Generate new URI mapping for this product?
+//steve
+// after move product
+// php--> PHP Warning: Undefined array key "uri-mapping" in D:\OneDrive\Business\Motorvista website\home-mvista\public_html\tienda\admin4AHbfbb6FyMU\includes\classes\class.CeonURIMappingAdminProductPages.php on line 1706.
+//--> PHP Warning: Undefined array key "uri-mapping" in D:\OneDrive\Business\Motorvista website\home-mvista\public_html\tienda\admin4AHbfbb6FyMU\includes\classes\class.CeonURIMappingAdminProductPages.php on line 1709.
+        $_POST['uri-mapping'] = $_POST['uri-mapping'] ?? 'autogen';
+//eof        
+        // Generate new URI mapping for this product?
 		$this->_uri_mapping_autogen = (($_POST['uri-mapping'] == 'autogen') ? true : false);
 		
 		// Drop existing URIs ?
