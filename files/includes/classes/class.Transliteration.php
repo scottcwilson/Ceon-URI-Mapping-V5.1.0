@@ -86,20 +86,20 @@ class Transliteration
 		
 		if (!isset($tailBytes)) {
 			// Each UTF-8 head byte is followed by a certain number of tail bytes
-			$tailBytes = array();
+			$tailBytes = [];
 			
 			for ($n = 0; $n < 256; $n++) {
 				if ($n < 0xc0) {
 					$remaining = 0;
-				} else if ($n < 0xe0) {
+				} elseif ($n < 0xe0) {
 					$remaining = 1;
-				} else if ($n < 0xf0) {
+				} elseif ($n < 0xf0) {
 					$remaining = 2;
-				} else if ($n < 0xf8) {
+				} elseif ($n < 0xf8) {
 					$remaining = 3;
-				} else if ($n < 0xfc) {
+				} elseif ($n < 0xfc) {
 					$remaining = 4;
-				} else if ($n < 0xfe) {
+				} elseif ($n < 0xfe) {
 					$remaining = 5;
 				} else {
 					$remaining = 0;
@@ -115,7 +115,7 @@ class Transliteration
 		$result = '';
 		
 		foreach($matches[0] as $str) {
-			if ($str{0} < "\x80") {
+			if ($str[0] < "\x80") {
 				// ASCII chunk: guaranteed to be valid UTF-8  and in normal form C, so skip over it
 				$result .= $str;
 				continue;
@@ -132,7 +132,7 @@ class Transliteration
 			$len = $chunk + 1; // Counting down is faster. I'm *so* sorry
 			
 			for ($i = -1; --$len;) {
-				$c = $str{++$i};
+				$c = $str[++$i];
 				
 				if ($remaining = $tailBytes[$c]) {
 					// UTF-8 head byte!
@@ -140,7 +140,7 @@ class Transliteration
 					
 					do {
 						// Look for the defined number of tail bytes...
-						if (--$len && ($c = $str{++$i}) >= "\x80" && $c < "\xc0") {
+						if (--$len && ($c = $str[++$i]) >= "\x80" && $c < "\xc0") {
 							// Legal tail bytes are nice
 							$sequence .= $c;
 						} else {
@@ -164,28 +164,28 @@ class Transliteration
 					$n = ord($head);
 					
 					if ($n <= 0xdf) {
-						$ord = ($n-192)*64 + (ord($sequence{1})-128);
-					} else if ($n <= 0xef) {
-						$ord = ($n-224)*4096 + (ord($sequence{1})-128)*64 + (ord($sequence{2})-128);
-					} else if ($n <= 0xf7) {
-						$ord = ($n-240)*262144 + (ord($sequence{1})-128)*4096 +
-							(ord($sequence{2})-128)*64 + (ord($sequence{3})-128);
-					} else if ($n <= 0xfb) {
-						$ord = ($n-248)*16777216 + (ord($sequence{1})-128)*262144 +
-							(ord($sequence{2})-128)*4096 + (ord($sequence{3})-128)*64 + (ord($sequence{4})-128);
-					} else if ($n <= 0xfd) {
-						$ord = ($n-252)*1073741824 + (ord($sequence{1})-128)*16777216 +
-							(ord($sequence{2})-128)*262144 + (ord($sequence{3})-128)*4096 +
-							(ord($sequence{4})-128)*64 + (ord($sequence{5})-128);
+						$ord = ($n-192)*64 + (ord($sequence[1])-128);
+					} elseif ($n <= 0xef) {
+						$ord = ($n-224)*4096 + (ord($sequence[1])-128)*64 + (ord($sequence[2])-128);
+					} elseif ($n <= 0xf7) {
+						$ord = ($n-240)*262144 + (ord($sequence[1])-128)*4096 +
+							(ord($sequence[2])-128)*64 + (ord($sequence[3])-128);
+					} elseif ($n <= 0xfb) {
+						$ord = ($n-248)*16777216 + (ord($sequence[1])-128)*262144 +
+							(ord($sequence[2])-128)*4096 + (ord($sequence[3])-128)*64 + (ord($sequence[4])-128);
+					} elseif ($n <= 0xfd) {
+						$ord = ($n-252)*1073741824 + (ord($sequence[1])-128)*16777216 +
+							(ord($sequence[2])-128)*262144 + (ord($sequence[3])-128)*4096 +
+							(ord($sequence[4])-128)*64 + (ord($sequence[5])-128);
 					}
 					
 					$result .= Transliteration::_replace($ord, $unknown, $language_code);
 					$head = '';
-				} else if ($c < "\x80") {
+				} elseif ($c < "\x80") {
 					// ASCII byte
 					$result .= $c;
 					$head = '';
-				} else if ($c < "\xc0") {
+				} elseif ($c < "\xc0") {
 					// Illegal tail bytes
 					if ($head == '') {
 						$result .= $unknown;
@@ -226,8 +226,8 @@ class Transliteration
 			$language_code = $GLOBALS['string_language'];
 		}
 		
-		static $map = array();
-		static $template = array();
+		static $map = [];
+		static $template = [];
 		
 		$bank = $ord >> 8;
 		
@@ -237,7 +237,7 @@ class Transliteration
 			if (file_exists($file)) {
 				$template[$bank] = include($file);
 			} else {
-				$template[$bank] = array('en' => array());
+				$template[$bank] = ['en' => []];
 			}
 		}
 		

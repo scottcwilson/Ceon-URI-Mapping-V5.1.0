@@ -62,7 +62,6 @@ class CeonURIMappingHandler extends CeonURIMappingHandlerBase
 	 *
 	 * @access  protected
 	 * @author  Conor Kerr <zen-cart.uri-mapping@ceon.net>
-	 * @return  none
 	 */
 	protected function _handleStaticURI()
 	{
