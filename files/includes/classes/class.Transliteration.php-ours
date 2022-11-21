@@ -86,20 +86,20 @@ class Transliteration
 		
 		if (!isset($tailBytes)) {
 			// Each UTF-8 head byte is followed by a certain number of tail bytes
-			$tailBytes = [];
+			$tailBytes = array();
 			
 			for ($n = 0; $n < 256; $n++) {
 				if ($n < 0xc0) {
 					$remaining = 0;
-				} elseif ($n < 0xe0) {
+				} else if ($n < 0xe0) {
 					$remaining = 1;
-				} elseif ($n < 0xf0) {
+				} else if ($n < 0xf0) {
 					$remaining = 2;
-				} elseif ($n < 0xf8) {
+				} else if ($n < 0xf8) {
 					$remaining = 3;
-				} elseif ($n < 0xfc) {
+				} else if ($n < 0xfc) {
 					$remaining = 4;
-				} elseif ($n < 0xfe) {
+				} else if ($n < 0xfe) {
 					$remaining = 5;
 				} else {
 					$remaining = 0;
@@ -165,15 +165,15 @@ class Transliteration
 					
 					if ($n <= 0xdf) {
 						$ord = ($n-192)*64 + (ord($sequence[1])-128);
-					} elseif ($n <= 0xef) {
+					} else if ($n <= 0xef) {
 						$ord = ($n-224)*4096 + (ord($sequence[1])-128)*64 + (ord($sequence[2])-128);
-					} elseif ($n <= 0xf7) {
+					} else if ($n <= 0xf7) {
 						$ord = ($n-240)*262144 + (ord($sequence[1])-128)*4096 +
 							(ord($sequence[2])-128)*64 + (ord($sequence[3])-128);
-					} elseif ($n <= 0xfb) {
+					} else if ($n <= 0xfb) {
 						$ord = ($n-248)*16777216 + (ord($sequence[1])-128)*262144 +
 							(ord($sequence[2])-128)*4096 + (ord($sequence[3])-128)*64 + (ord($sequence[4])-128);
-					} elseif ($n <= 0xfd) {
+					} else if ($n <= 0xfd) {
 						$ord = ($n-252)*1073741824 + (ord($sequence[1])-128)*16777216 +
 							(ord($sequence[2])-128)*262144 + (ord($sequence[3])-128)*4096 +
 							(ord($sequence[4])-128)*64 + (ord($sequence[5])-128);
@@ -181,11 +181,11 @@ class Transliteration
 					
 					$result .= Transliteration::_replace($ord, $unknown, $language_code);
 					$head = '';
-				} elseif ($c < "\x80") {
+				} else if ($c < "\x80") {
 					// ASCII byte
 					$result .= $c;
 					$head = '';
-				} elseif ($c < "\xc0") {
+				} else if ($c < "\xc0") {
 					// Illegal tail bytes
 					if ($head == '') {
 						$result .= $unknown;
@@ -226,8 +226,8 @@ class Transliteration
 			$language_code = $GLOBALS['string_language'];
 		}
 		
-		static $map = [];
-		static $template = [];
+		static $map = array();
+		static $template = array();
 		
 		$bank = $ord >> 8;
 		
@@ -237,7 +237,7 @@ class Transliteration
 			if (file_exists($file)) {
 				$template[$bank] = include($file);
 			} else {
-				$template[$bank] = ['en' => []];
+				$template[$bank] = array('en' => array());
 			}
 		}
 		
