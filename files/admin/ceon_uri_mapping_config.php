@@ -264,9 +264,8 @@ echo zen_hide_session_id(); ?>
 <?php
 
 echo $config_utility->getOutput();
-
+echo '</form>'; //steve
 ?>
-</form>
 </div>
 <!-- body_eof //-->
 
