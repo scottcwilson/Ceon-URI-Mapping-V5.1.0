@@ -22,7 +22,8 @@ if (!defined('IS_ADMIN_FLAG')) {
 
 // This file should normally only need to be run once, but if the user hasn't installed the software properly it
 // may need to be run again. Flag tracks the situation
-$can_autodelete = true;
+//steve set autodelete to false
+$can_autodelete = false;
 
 if (function_exists('zen_register_admin_page')) {
 	if (!zen_page_key_exists('ceon_uri_mapping_config')) {
