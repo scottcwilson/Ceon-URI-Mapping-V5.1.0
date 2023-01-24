@@ -2318,7 +2318,7 @@ class CeonURIMappingInstallationCheck extends CeonURIMappingVersion
 
 		foreach ($old_files_dirs as $old_file_or_dir) {
 			// Attempt to remove the file/directory
-			$path = isset($old_file_or_dir['file']) ? $old_file_or_dir['file'] : $old_file_or_dir['dir'];
+			$path = $old_file_or_dir['file'] ?? $old_file_or_dir['dir'];
 
 			if (file_exists($path)) {
 				if (!is_dir($path)) {
