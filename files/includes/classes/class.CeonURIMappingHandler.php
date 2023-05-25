@@ -408,7 +408,7 @@ class CeonURIMappingHandler extends CeonURIMappingHandlerBase
 		// A product review's page needs the ID included as part of the canonical URI
 		if (defined('FILENAME_PRODUCT_REVIEWS_INFO') && $main_page == FILENAME_PRODUCT_REVIEWS_INFO &&
 				isset($_GET['reviews_id'])) {
-			$ceon_uri_mapping_canonical_uri .= '?reviews_id=' . $_GET['reviews_id'];
+			$ceon_uri_mapping_canonical_uri .= '?reviews_id=' . (int)$_GET['reviews_id'];
 		}
 		if (isset($GLOBALS['zco_notifier'])) {
 			$GLOBALS['zco_notifier']->notify('CEON_CLASS_HANDLER_HANDLE_STATIC_URI_END', compact('mapping_info', 'uri_to_match'));
@@ -440,7 +440,7 @@ class CeonURIMappingHandler extends CeonURIMappingHandlerBase
 				isset($_GET[$_GET['typefilter'] . '_id']) && $_GET[$_GET['typefilter'] . '_id'] != ''))) {
 			if (isset($_GET['manufacturers_id'])) {
 				// This is a manufacturer page - get the URI for the manufacturers page if there is one
-				$query_string_to_match = 'manufacturers_id=' . $_GET['manufacturers_id'];
+				$query_string_to_match = 'manufacturers_id=' . (int)$_GET['manufacturers_id'];
 
 			} else if (isset($_GET['typefilter']) && $_GET['typefilter'] != '' &&
 					isset($_GET[$_GET['typefilter'] . '_id']) && $_GET[$_GET['typefilter'] . '_id'] != '') {
@@ -694,12 +694,12 @@ class CeonURIMappingHandler extends CeonURIMappingHandlerBase
 				global $ceon_uri_mapping_canonical_uri;
 
 				$ceon_uri_mapping_canonical_uri = HTTP_SERVER . DIR_WS_CATALOG .
-					'index.php?main_page=index&manufacturers_id=' . $_GET['manufacturers_id'];
+					'index.php?main_page=index&manufacturers_id=' . (int)$_GET['manufacturers_id'];
 
 			} else if (isset($_GET['typefilter']) && $_GET['typefilter'] != '' &&
 					isset($_GET[$_GET['typefilter'] . '_id']) && $_GET[$_GET['typefilter'] . '_id'] != '') {
 				global $ceon_uri_mapping_canonical_uri;
-
+                $_GET['typefilter'] = htmlspecialchars($_GET['typefilter']);
 				$ceon_uri_mapping_canonical_uri = HTTP_SERVER . DIR_WS_CATALOG . 'index.php?main_page=index' .
 					'&typefilter=' . $_GET['typefilter'] . '&' . $_GET['typefilter'] . '_id=' .
 					$_GET[$_GET['typefilter'] . '_id'];
