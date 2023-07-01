@@ -292,9 +292,9 @@ class CeonURIMappingAdminProductPages extends CeonURIMappingAdminProducts
 			<?php echo zen_draw_input_field('products_sort_order', $pInfo->products_sort_order, 'class="form-control"'); ?>
 		</div>
 */
-		$uri_mapping_input_fields = zen_draw_separator('pixel_trans.gif', '1', '10') . '
+        $uri_mapping_input_fields = zen_draw_separator('pixel_trans.gif', '1', '10') . '
 				' . zen_draw_separator('pixel_black.gif', '100%', '2') .
-				zen_draw_label(CEON_URI_MAPPING_TEXT_PRODUCT_URI, 'uri-mappings', 'class ="col-sm-3 control-label"') . '
+            '<p class="col-sm-3 control-label">' . CEON_URI_MAPPING_TEXT_PRODUCT_URI . '</p>' . '
 				<div class="col-sm-9 col-md-6">' . "\n";
 
 		for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
