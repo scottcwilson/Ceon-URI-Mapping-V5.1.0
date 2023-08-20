@@ -265,7 +265,7 @@ window.onload = function(){
 	for ($i = $contents_start, $n = count($contents) - 1; $i < $n; $i++) {
 		$ceonUriMappingCopyProduct .= $contents[$i]['text'];
 	}
-	echo json_encode(utf8_encode($ceonUriMappingCopyProduct));
+    echo json_encode($ceonUriMappingCopyProduct);
 		?>;
 
 	var classList = document.getElementsByName("copy_as");
@@ -313,7 +313,7 @@ window.onload = function(){
 	for ($i = 0, $n = count($contents); $i < $n; $i++) {
 		$ceonUriMappingMoveProduct .= $contents[$i]['text'];
 	}
-	echo json_encode(utf8_encode($ceonUriMappingMoveProduct));
+    echo json_encode($ceonUriMappingMoveProduct);
 	 ?>;
 	var classList = document.getElementsByClassName("row infoBoxContent");
 	var place = classList[classList.length - 1];
@@ -448,7 +448,7 @@ window.onload = function(){
 		$text_str .= $value['text'];
 	}
 
-	echo json_encode(utf8_encode($text_str));
+    echo json_encode($text_str);
 	// END CEON URI MAPPING 3 of 3
 ?>;
 
