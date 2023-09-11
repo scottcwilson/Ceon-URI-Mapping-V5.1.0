@@ -43,12 +43,12 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_error_messages = array();
+	protected $_error_messages = [];
 
 	/**
 	 * Whether or not auto-generation is enabled.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_autogen_new = null;
@@ -56,7 +56,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * The whitespace replacement setting for the store.
 	 *
-	 * @var     integer
+	 * @var     int
 	 * @access  protected
 	 */
 	protected $_whitespace_replacement = null;
@@ -64,7 +64,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * The capitalisation setting for the store.
 	 *
-	 * @var     integer
+	 * @var     int
 	 * @access  protected
 	 */
 	protected $_capitalisation = null;
@@ -88,7 +88,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * The add language code identifier to URI setting for the store.
 	 *
-	 * @var     integer
+	 * @var     int
 	 * @access  protected
 	 */
 	protected $_language_code_add = null;
@@ -104,7 +104,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * Whether or not product reviews pages should have their URIs auto-managed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_manage_product_reviews_mappings = null;
@@ -112,7 +112,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * Whether or not products' review info pages should have their URIs auto-managed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_manage_product_reviews_info_mappings = null;
@@ -120,7 +120,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * Whether or not products' write a review pages should have their URIs auto-managed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_manage_product_reviews_write_mappings = null;
@@ -128,7 +128,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * Whether or not product tell a friend pages should have their URIs auto-managed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_manage_tell_a_friend_mappings = null;
@@ -136,7 +136,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	/**
 	 * Whether or not product ask a question pages should have their URIs auto-managed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_manage_ask_a_question_mappings = null;
@@ -147,7 +147,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_product_reviews_pages_uri_parts = array();
+	protected $_product_reviews_pages_uri_parts = [];
 
 	/**
 	 * The list of URI part's text for product review info pages, for the various languages the
@@ -156,7 +156,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_product_reviews_info_pages_uri_parts = array();
+	protected $_product_reviews_info_pages_uri_parts = [];
 
 	/**
 	 * The list of URI part's text for product write a review pages, for the various languages the store uses.
@@ -164,7 +164,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_product_reviews_write_pages_uri_parts = array();
+	protected $_product_reviews_write_pages_uri_parts = [];
 
 	/**
 	 * The list of URI part's text for product tell a friend pages, for the various languages the store uses.
@@ -172,7 +172,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_product_tell_a_friend_pages_uri_parts = array();
+	protected $_product_tell_a_friend_pages_uri_parts = [];
 
 	// }}}
  //steve for php 8.2
@@ -224,7 +224,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 	 * Checks that the module is installed and that the database and configuration are up to date.
 	 *
 	 * @access  protected
-	 * @return  boolean   True if the module is installed and the database and configuration are up to date, false
+	 * @return  bool   True if the module is installed and the database and configuration are up to date, false
 	 *                    otherwise.
 	 */
 	public function _checkInstalledAndUpToDate()
@@ -234,7 +234,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 		if ((is_null($this->_installed_version) || $this->_installed_version != $this->_version) ||
 				isset($_GET['check-config'])) {
 			// Main variable holds list of installation/upgrade errors (if any)
-			$version_errors = array();
+			$version_errors = [];
 
 			// Instantiate and run the installation/upgrade class
 			require_once('class.CeonURIMappingInstallOrUpgrade.php');
@@ -343,22 +343,22 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			$this->_mapping_clash_action = $load_config_result->fields['mapping_clash_action'];
 
 			$this->_manage_product_reviews_mappings =
-				($load_config_result->fields['manage_product_reviews_mappings'] == 1 ? true : false);
+                $load_config_result->fields['manage_product_reviews_mappings'] == 1;
 
 			$this->_manage_product_reviews_info_mappings =
-				($load_config_result->fields['manage_product_reviews_info_mappings'] == 1 ? true : false);
+                $load_config_result->fields['manage_product_reviews_info_mappings'] == 1;
 
 			$this->_manage_product_reviews_write_mappings =
-				($load_config_result->fields['manage_product_reviews_write_mappings'] == 1 ? true : false);
+                $load_config_result->fields['manage_product_reviews_write_mappings'] == 1;
 
 			$this->_manage_tell_a_friend_mappings =
-				($load_config_result->fields['manage_tell_a_friend_mappings'] == 1 ? true : false);
+                $load_config_result->fields['manage_tell_a_friend_mappings'] == 1;
 
 			$this->_manage_ask_a_question_mappings =
-				($load_config_result->fields['manage_ask_a_question_mappings'] == 1 ? true : false);
+                $load_config_result->fields['manage_ask_a_question_mappings'] == 1;
 
 			$this->_automatic_version_checking =
-				($load_config_result->fields['automatic_version_checking'] == 1 ? true : false);
+                $load_config_result->fields['automatic_version_checking'] == 1;
 
 			$uri_parts_sql = "
 				SELECT
@@ -431,17 +431,17 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 		$this->_mapping_clash_action = trim($_POST['mapping-clash-action']);
 
 		$this->_manage_product_reviews_mappings =
-			(isset($_POST['manage-product-reviews-mappings']) ? true : false);
+            isset($_POST['manage-product-reviews-mappings']);
 
 		$this->_manage_product_reviews_info_mappings =
-			(isset($_POST['manage-product-reviews-info-mappings']) ? true : false);
+            isset($_POST['manage-product-reviews-info-mappings']);
 
 		$this->_manage_product_reviews_write_mappings =
-			(isset($_POST['manage-product-reviews-write-mappings']) ? true : false);
+            isset($_POST['manage-product-reviews-write-mappings']);
 
-		$this->_manage_tell_a_friend_mappings = (isset($_POST['manage-tell-a-friend-mappings']) ? true : false);
+		$this->_manage_tell_a_friend_mappings = isset($_POST['manage-tell-a-friend-mappings']);
 
-		$this->_manage_ask_a_question_mappings = (isset($_POST['manage-ask-a-question-mappings']) ? true : false);
+		$this->_manage_ask_a_question_mappings = isset($_POST['manage-ask-a-question-mappings']);
 
 		if (!class_exists('CeonString')) {
 			require_once DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonString.php';
@@ -585,7 +585,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 		// Save the configuration
 		if (!$ceon_uri_mapping_demo && count($this->_error_messages) == 0) {
 
-			$save_config_data_array = array(
+			$save_config_data_array = [
 				'autogen_new' => $this->_autogen_new,
 				'whitespace_replacement' => $this->_whitespace_replacement,
 				'capitalisation' => $this->_capitalisation,
@@ -600,7 +600,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 				'manage_tell_a_friend_mappings' => ($this->_manage_tell_a_friend_mappings ? 1 : 0),
 				'manage_ask_a_question_mappings' => ($this->_manage_ask_a_question_mappings ? 1 : 0),
 				'automatic_version_checking' => $this->_automatic_version_checking
-				);
+            ];
 
 			// Only one config currently supported so ID is hard-coded
 			$selection_sql = "id = '1'";
@@ -619,43 +619,43 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			for ($i = 0; $i < $num_languages; $i++) {
 				$language_code = strtolower($languages[$i]['code']);
 
-				$uri_parts_data_array = array(
+				$uri_parts_data_array = [
 					'page_type' => 'product_reviews',
 					'language_code' => $language_code,
 					'uri_part' => $this->_product_reviews_pages_uri_parts[$language_code]
-					);
+                ];
 
 				zen_db_perform(TABLE_CEON_URI_MAPPING_PRODUCT_RELATED_PAGES_URI_PARTS, $uri_parts_data_array);
 
-				$uri_parts_data_array = array(
+				$uri_parts_data_array = [
 					'page_type' => 'product_reviews_info',
 					'language_code' => $language_code,
 					'uri_part' => $this->_product_reviews_info_pages_uri_parts[$language_code]
-					);
+                ];
 
 				zen_db_perform(TABLE_CEON_URI_MAPPING_PRODUCT_RELATED_PAGES_URI_PARTS, $uri_parts_data_array);
 
-				$uri_parts_data_array = array(
+				$uri_parts_data_array = [
 					'page_type' => 'product_reviews_write',
 					'language_code' => $language_code,
 					'uri_part' => $this->_product_reviews_write_pages_uri_parts[$language_code]
-					);
+                ];
 
 				zen_db_perform(TABLE_CEON_URI_MAPPING_PRODUCT_RELATED_PAGES_URI_PARTS, $uri_parts_data_array);
 
-				$uri_parts_data_array = array(
+				$uri_parts_data_array = [
 					'page_type' => 'tell_a_friend',
 					'language_code' => $language_code,
 					'uri_part' => $this->_tell_a_friend_pages_uri_parts[$language_code]
-					);
+                ];
 
 				zen_db_perform(TABLE_CEON_URI_MAPPING_PRODUCT_RELATED_PAGES_URI_PARTS, $uri_parts_data_array);
 
-				$uri_parts_data_array = array(
+				$uri_parts_data_array = [
 					'page_type' => 'ask_a_question',
 					'language_code' => $language_code,
 					'uri_part' => $this->_ask_a_question_pages_uri_parts[$language_code]
-					);
+                ];
 
 				zen_db_perform(TABLE_CEON_URI_MAPPING_PRODUCT_RELATED_PAGES_URI_PARTS, $uri_parts_data_array);
 
@@ -704,7 +704,7 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 		if ($num_errors > 0) {
 			if ($num_errors == 1) {
 				$this->_output .= '<p class="ErrorIntro">' . TEXT_ERROR_IN_CONFIG . '</p>';
-			} else if ($num_errors > 0 ) {
+			} elseif ($num_errors > 0 ) {
 				$this->_output .= sprintf('<p class="ErrorIntro">' . TEXT_ERRORS_IN_CONFIG, $num_errors) . '</p>';
 			}
 		}
@@ -769,11 +769,11 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			<td class="CeonFormItemField">' . "\n";
 
 		$option_output_rows .= '<p>' . zen_draw_radio_field('autogen-new', '1',
-			($this->_autogen_new == 1 ? true : false), '', 'id="autogen-new-yes"') .
+                $this->_autogen_new == 1, '', 'id="autogen-new-yes"') .
 			'<label class="attribsRadioButton" for="autogen-new-yes">' . TEXT_YES . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('autogen-new', '0',
-			($this->_autogen_new == 1 ? false : true), '', 'id="autogen-new-no"') .
+                !($this->_autogen_new == 1), '', 'id="autogen-new-no"') .
 			'<label class="attribsRadioButton" for="autogen-new-no">' . TEXT_NO . '</label>' . "</p>\n";
 
 		$option_output_rows .= '			</td>
@@ -785,24 +785,24 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 		/**
 		 * Variable holds values for the whitespace replacement options
 		 */
-		$whitespace_replacement_options = array(
-			array(
+		$whitespace_replacement_options = [
+			[
 				'id' => CEON_URI_MAPPING_SINGLE_UNDERSCORE,
 				'text' => TEXT_WHITESPACE_REPLACEMENT_SINGLE_UNDERSCORE
-				),
-			array(
+            ],
+			[
 				'id' => CEON_URI_MAPPING_SINGLE_DASH,
 				'text' => TEXT_WHITESPACE_REPLACEMENT_SINGLE_DASH
-				),
-			array(
+            ],
+			[
 				'id' => CEON_URI_MAPPING_SINGLE_FULL_STOP,
 				'text' => TEXT_WHITESPACE_REPLACEMENT_SINGLE_FULL_STOP
-				),
-			array(
+            ],
+			[
 				'id' => CEON_URI_MAPPING_REMOVE,
 				'text' => TEXT_WHITESPACE_REPLACEMENT_REMOVE
-				)
-			);
+            ]
+        ];
 
 		$option_output_rows .= $this->_buildConfigSettingDescRow('whitespace-replacement',
 			TEXT_LABEL_WHITESPACE_REPLACEMENT, TEXT_CONFIG_DESC_WHITESPACE_REPLACEMENT);
@@ -826,21 +826,21 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 
 		$option_output_rows .= '<p>' . zen_draw_radio_field('capitalisation',
 			CEON_URI_MAPPING_CAPITALISATION_LOWERCASE,
-			($this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_LOWERCASE ? true : false),
+                $this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_LOWERCASE,
 			'', 'id="capitalisation-lowercase"') .
 			'<label class="attribsRadioButton" for="capitalisation-lowercase">' .
 			TEXT_CAPITALISATION_LOWERCASE . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('capitalisation',
 			CEON_URI_MAPPING_CAPITALISATION_AS_IS,
-			($this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_AS_IS ? true : false), '',
+                $this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_AS_IS, '',
 			'id="capitalisation-as-is"') .
 			'<label class="attribsRadioButton" for="capitalisation-as-is">' .
 			TEXT_CAPITALISATION_AS_IS . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('capitalisation',
 			CEON_URI_MAPPING_CAPITALISATION_UCFIRST,
-			($this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_UCFIRST ? true : false), '',
+                $this->_capitalisation == CEON_URI_MAPPING_CAPITALISATION_UCFIRST, '',
 			'id="capitalisation-ucfirst"') .
 			'<label class="attribsRadioButton" for="capitalisation-ucfirst">' .
 			TEXT_CAPITALISATION_UCFIRST . '</label>' . "</p>\n";
@@ -885,11 +885,11 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			<td class="CeonFormItemField">' . "\n";
 
 		$option_output_rows .= '<p>' . zen_draw_radio_field('language-code-add', '1',
-			($this->_language_code_add == 1 ? true : false), '', 'id="language-code-add-yes"') .
+                $this->_language_code_add == 1, '', 'id="language-code-add-yes"') .
 			'<label class="attribsRadioButton" for="language-code-add-yes">' . TEXT_YES . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('language-code-add', '0',
-			($this->_language_code_add == 1 ? false : true), '', 'id="language-code-add-no"') .
+                !($this->_language_code_add == 1), '', 'id="language-code-add-no"') .
 			'<label class="attribsRadioButton" for="language-code-add-no">' . TEXT_NO . '</label>' . "</p>\n";
 
 		$option_output_rows .= '			</td>
@@ -903,13 +903,15 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			<td class="CeonFormItemField">' . "\n";
 
 		$option_output_rows .= '<p>' . zen_draw_radio_field('mapping-clash-action',
-			'warn', ($this->_mapping_clash_action == 'warn' ? true : false),
+			'warn',
+                $this->_mapping_clash_action == 'warn',
 			'', 'id="mapping-clash-action-warn"') .
 			'<label class="attribsRadioButton" for="mapping-clash-action-warn">' .
 			TEXT_MAPPING_CLASH_ACTION_WARN . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('mapping-clash-action',
-			'auto-append', ($this->_mapping_clash_action == 'auto-append' ? true : false), '',
+			'auto-append',
+                $this->_mapping_clash_action == 'auto-append', '',
 			'id="mapping-clash-action-auto-append"') .
 			'<label class="attribsRadioButton" for="mapping-clash-action-auto-append">' .
 			TEXT_MAPPING_CLASH_ACTION_AUTO_APPEND . '</label>' . "\n";
@@ -1156,13 +1158,13 @@ class CeonURIMappingConfigUtility extends CeonURIMappingVersion
 			<td class="CeonFormItemField">' . "\n";
 
 		$option_output_rows .= '<p>' . zen_draw_radio_field('automatic-version-checking', '1',
-			($this->_automatic_version_checking == 1 ? true : false), '',
+                $this->_automatic_version_checking == 1, '',
 			'id="automatic-version-checking-yes"') .
 			'<label class="attribsRadioButton" for="automatic-version-checking-yes">' .
 			TEXT_AUTOMATIC_VERSION_CHECKING . '</label>' . "\n";
 
 		$option_output_rows .= '<br />' . zen_draw_radio_field('automatic-version-checking', '0',
-			($this->_automatic_version_checking == 1 ? false : true), '',
+                !($this->_automatic_version_checking == 1), '',
 			'id="automatic-version-checking-no"') .
 			'<label class="attribsRadioButton" for="automatic-version-checking-no">' .
 			TEXT_MANUAL_VERSION_CHECKING . '</label>' . "</p>\n";

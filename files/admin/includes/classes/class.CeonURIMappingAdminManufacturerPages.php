@@ -48,7 +48,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_uri_mappings = array();
+	protected $_uri_mappings = [];
 	
 	/**
 	 * Maintains a copy of any previous URI mappings for the Manufacturer.
@@ -56,12 +56,12 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_prev_uri_mappings = array();
+	protected $_prev_uri_mappings = [];
 	
 	/**
 	 * Flag indicates whether or not auto-generation of URI mappings has been selected for the Manufacturer.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_uri_mapping_autogen = false;
@@ -72,7 +72,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_clashing_mappings = array();
+	protected $_clashing_mappings = [];
 	
 	// }}}
 	
@@ -106,15 +106,15 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * Handles the Ceon URI Mapping functionality when a manufacturer is being inserted or updated.
 	 *
 	 * @access  public
-	 * @param   integer   $manufacturer_id   The ID of the manufacturer.
-	 * @param   integer   $manufacturer_name   The name of the manufacturer.
+	 * @param  int  $manufacturer_id   The ID of the manufacturer.
+	 * @param  int  $manufacturer_name   The name of the manufacturer.
 	 * @return  none
 	 */
 	public function insertSaveHandler($manufacturer_id, $manufacturer_name)
 	{
 		global $messageStack;
 		
-		$uri_mapping_autogen = (isset($_POST['uri-mapping-autogen']) ? true : false);
+		$uri_mapping_autogen = isset($_POST['uri-mapping-autogen']);
 		
 		$languages = zen_get_languages();
 		
@@ -152,7 +152,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 				// Check if the URI mapping is being updated or does not yet exist
 				if ($prev_uri_mapping == '') {
 					$insert_uri_mapping = true;
-				} else if ($prev_uri_mapping != $uri_mapping) {
+				} elseif ($prev_uri_mapping != $uri_mapping) {
 					$update_uri_mapping = true;
 				}
 			}
@@ -192,7 +192,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 							ucwords($languages[$i]['name']),
 							'<a href="' . HTTP_SERVER . $uri . '" target="_blank">' . $uri . '</a>');
 						
-					} else if ($mapping_added == CEON_URI_MAPPING_ADD_MAPPING_ERROR_DATA_ERROR) {
+					} elseif ($mapping_added == CEON_URI_MAPPING_ADD_MAPPING_ERROR_DATA_ERROR) {
 						$failure_message = sprintf(CEON_URI_MAPPING_TEXT_ERROR_ADD_MAPPING_DATA,
 							ucwords($languages[$i]['name']), $uri);
 					} else {
@@ -202,7 +202,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 					
 					$messageStack->add_session($failure_message, 'error');
 				}
-			} else if ($prev_uri_mapping != '' && $uri_mapping == '') {
+			} elseif ($prev_uri_mapping != '' && $uri_mapping == '') {
 				// No URI mapping, consign existing mapping to the history, so old URI mapping isn't broken
 				$this->makeURIMappingHistorical($prev_uri_mapping, $languages[$i]['id']);
 				
@@ -223,17 +223,17 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * Handles the Ceon URI Mapping functionality when a Manufacturer is being deleted.
 	 *
 	 * @access  public
-	 * @param   integer   $manufacturer_id   The ID of the manufacturer.
+	 * @param  int  $manufacturer_id   The ID of the manufacturer.
 	 * @return  none
 	 */
 	public function deleteConfirmHandler($manufacturer_id)
 	{
 		$query_string_parameters = 'manufacturers_id=' . (int) $manufacturer_id;
 		
-		$selections = array(
+		$selections = [
 			'main_page' => FILENAME_DEFAULT,
 			'query_string_parameters' => $query_string_parameters
-			);
+        ];
 		
 		$this->deleteURIMappings($selections);
 	}
@@ -255,11 +255,11 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		global $contents;
 		
 		// New manufacturer doesn't have any previous URI mappings
-		$prev_uri_mappings = array();
+		$prev_uri_mappings = [];
 		
 		$uri_mapping_input_fields = $this->buildManufacturerURIMappingFields($prev_uri_mappings);
 		
-		$contents[] = array('text' => $uri_mapping_input_fields);
+		$contents[] = ['text' => $uri_mapping_input_fields];
 	}
 	
 	// }}}
@@ -272,7 +272,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * accessing the list of edit manufacturer fields directly, through a global variable.
 	 *
 	 * @access  public
-	 * @param   integer   $manufacturer_id   The ID of the manufacturer.
+	 * @param  int  $manufacturer_id   The ID of the manufacturer.
 	 * @return  none
 	 */
 	public function addURIMappingFieldsToEditManufacturerFieldsArray($manufacturer_id)
@@ -280,20 +280,20 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		global $contents;
 		
 		// Get any current manufacturer mappings from the database, up to one for each language
-		$prev_uri_mappings = array();
+		$prev_uri_mappings = [];
 		
-		$columns_to_retrieve = array(
+		$columns_to_retrieve = [
 			'language_id',
 			'uri'
-			);
+        ];
 		
 		$query_string_parameters = 'manufacturers_id=' . (int) $manufacturer_id;
 		
-		$selections = array(
+		$selections = [
 			'main_page' => FILENAME_DEFAULT,
 			'query_string_parameters' => $query_string_parameters,
 			'current_uri' => 1
-			);
+        ];
 		
 		$prev_uri_mappings_result = $this->getURIMappingsResultset($columns_to_retrieve, $selections);
 		
@@ -306,7 +306,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		
 		$uri_mapping_input_fields = $this->buildManufacturerURIMappingFields($prev_uri_mappings);
 		
-		$contents[] = array('text' => $uri_mapping_input_fields);
+		$contents[] = ['text' => $uri_mapping_input_fields];
 	}
 	
 	// }}}
@@ -319,7 +319,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 	 * accessing the list of edit manufacturer fields directly, through a global variable.
 	 *
 	 * @access  public
-	 * @param   integer   $manufacturer_id   The ID of the manufacturer.
+	 * @param  int  $manufacturer_id   The ID of the manufacturer.
 	 * @return  none
 	 */
 	public function addURIMappingFieldsToEditManufacturerFieldsFormArray($manufacturer_id)
@@ -327,20 +327,20 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		global $contents;
 		
 		// Get any current manufacturer mappings from the database, up to one for each language
-		$prev_uri_mappings = array();
+		$prev_uri_mappings = [];
 		
-		$columns_to_retrieve = array(
+		$columns_to_retrieve = [
 			'language_id',
 			'uri'
-			);
+        ];
 		
 		$query_string_parameters = 'manufacturers_id=' . (int) $manufacturer_id;
 		
-		$selections = array(
+		$selections = [
 			'main_page' => FILENAME_DEFAULT,
 			'query_string_parameters' => $query_string_parameters,
 			'current_uri' => 1
-			);
+        ];
 		
 		$prev_uri_mappings_result = $this->getURIMappingsResultset($columns_to_retrieve, $selections);
 		
@@ -353,7 +353,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		
 		$uri_mapping_input_fields = $this->buildManufacturerURIMappingFormFields($prev_uri_mappings);
 		
-		$contents[] = array('text' => $uri_mapping_input_fields);
+		$contents[] = ['text' => $uri_mapping_input_fields];
 	}
 	
 	// }}}
@@ -386,7 +386,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 			'<tr>' . "\n\t\t" . '<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">' . "\n";
 		
 		for ($i = 0, $n = count($languages); $i < $n; $i++) {
-			$uri_mapping_input_fields .= "<p>";
+			$uri_mapping_input_fields .= '<p>';
 			
 			if (!isset($prev_uri_mappings[$languages[$i]['id']])) {
 				$prev_uri_mappings[$languages[$i]['id']] = '';
@@ -406,7 +406,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		$uri_mapping_input_fields .= '</td>' . "\n\t</tr>\n\t<tr>\n\t\t" .
 			'<td class="main" style="padding-top: 1em; padding-bottom: 0.5em;">' . "\n";
 		
-		$uri_mapping_input_fields .= "<p>";
+		$uri_mapping_input_fields .= '<p>';
 		
 		if ($this->_autogenEnabled()) {
 			if ($num_languages == 1) {
@@ -422,7 +422,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 				
 				if ($num_prev_uri_mappings == 1) {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_ONE_EXISTING_MAPPING;
-				} else if ($num_prev_uri_mappings == $num_languages) {
+				} elseif ($num_prev_uri_mappings == $num_languages) {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_ALL_EXISTING_MAPPINGS;
 				} else {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_SOME_EXISTING_MAPPINGS;
@@ -435,7 +435,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 			$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_URI_AUTOGEN_DISABLED;
 		}
 		
-		$uri_mapping_input_fields .= "</p>";
+		$uri_mapping_input_fields .= '</p>';
 		
 		$uri_mapping_input_fields .= "\n\t\t</td>\n\t</tr>\n</table>\n";
 		
@@ -476,7 +476,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
             '<tr>' . "\n\t\t" . '<td class="main" style="padding-top: 0.5em; padding-bottom: 0;">' . "\n";
 		
 		for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-			$uri_mapping_input_fields .= "<p>";
+			$uri_mapping_input_fields .= '<p>';
 			
 			if (!isset($prev_uri_mappings[$languages[$i]['id']])) {
 				$prev_uri_mappings[$languages[$i]['id']] = '';
@@ -496,7 +496,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 		$uri_mapping_input_fields .= '</td>' . "\n\t</tr>\n\t<tr>\n\t\t" .
 			'<td class="main" style="padding-top: 1em; padding-bottom: 0.5em;">' . "\n";
 		
-		$uri_mapping_input_fields .= "<p>";
+		$uri_mapping_input_fields .= '<p>';
 		
 		if ($this->_autogenEnabled()) {
 			if ($num_languages == 1) {
@@ -512,7 +512,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 				
 				if ($num_prev_uri_mappings == 1) {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_ONE_EXISTING_MAPPING;
-				} else if ($num_prev_uri_mappings == $num_languages) {
+				} elseif ($num_prev_uri_mappings == $num_languages) {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_ALL_EXISTING_MAPPINGS;
 				} else {
 					$autogen_message .= '<br />' . CEON_URI_MAPPING_TEXT_URI_AUTOGEN_SOME_EXISTING_MAPPINGS;
@@ -525,7 +525,7 @@ class CeonURIMappingAdminManufacturerPages extends CeonURIMappingAdminManufactur
 			$uri_mapping_input_fields .= CEON_URI_MAPPING_TEXT_URI_AUTOGEN_DISABLED;
 		}
 		
-		$uri_mapping_input_fields .= "</p>";
+		$uri_mapping_input_fields .= '</p>';
 		
 		$uri_mapping_input_fields .= "\n\t\t</td>\n\t</tr>\n</table>\n";
 		

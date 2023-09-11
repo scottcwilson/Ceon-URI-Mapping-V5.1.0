@@ -126,7 +126,7 @@ window.onload = function(){
 
 	$text_str = '';
 	foreach ($GLOBALS['contents'] as $key => $value) {
-		$text_str .= isset($value['text']) ? $value['text'] : '';
+		$text_str .= $value['text'] ?? '';
 	}
 //steve removed utf-8 encode
 	//echo json_encode(utf8_encode($text_str));
@@ -394,7 +394,7 @@ window.onload = function(){
 
 	$ceon_uri_mapping_admin->addURIMappingFieldsToEditCategoryForm(
 		(int) $GLOBALS['cInfo']->categories_id,
-		array('label' => 'col-sm-2 control-label', 'input_field'=>'col-sm-9 col-md-6')
+		['label' => 'col-sm-2 control-label', 'input_field'=>'col-sm-9 col-md-6']
 		);
 
 	$text_str = '';

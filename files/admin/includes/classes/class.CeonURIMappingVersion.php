@@ -41,7 +41,7 @@ class CeonURIMappingVersion extends CeonURIMappingTabbedPanelAdminInterface
 	/**
 	 * Creates a new instance of the class.
 	 * 
-	 * @param   boolean   Whether or not the autogeneration configuration should be loaded when instantiating the
+	 * @param   bool   Whether or not the autogeneration configuration should be loaded when instantiating the
 	 *                    class.
 	 * @access  public
 	 */
@@ -77,7 +77,7 @@ class CeonURIMappingVersion extends CeonURIMappingTabbedPanelAdminInterface
 	 * Looks up the currently installed version and stores it in this instance's property.
 	 *
 	 * @access  protected
-	 * @return  boolean   True if the version number look up completed without failure, false otherwise. The module
+	 * @return  bool   True if the version number look up completed without failure, false otherwise. The module
 	 *                    not being installed yet is not counted as a failure.
 	 */
 	protected function _lookUpInstalledVersion()
