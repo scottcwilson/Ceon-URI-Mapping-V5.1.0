@@ -463,29 +463,11 @@ class CeonURIMappingInstallOrUpgrade
 		$default_language_code = strtolower(DEFAULT_LANGUAGE);
 
         $fallback_defines = [
-			'product_reviews' =>
-				isset($default_uri_parts[$default_language_code]['product_reviews']) ?
-				$default_uri_parts[$default_language_code]['product_reviews'] :
-				isset($default_uri_parts['en']['product_reviews']) ?
-				$default_uri_parts['en']['product_reviews'] : 'Reviews',
-			'product_reviews_info' =>
-				isset($default_uri_parts[$default_language_code]['product_reviews_info']) ?
-				$default_uri_parts[$default_language_code]['product_reviews_info'] :
-				isset($default_uri_parts['en']['product_reviews_info']) ?
-				$default_uri_parts['en']['product_reviews_info'] : 'Review',
-			'product_reviews_write' =>
-				isset($default_uri_parts[$default_language_code]['product_reviews_write']) ?
-				$default_uri_parts[$default_language_code]['product_reviews_write'] :
-				isset($default_uri_parts['en']['product_reviews_write']) ?
-				$default_uri_parts['en']['product_reviews_write'] : 'Write a Review',
-			'tell_a_friend' => isset($default_uri_parts[$default_language_code]['tell_a_friend']) ?
-				$default_uri_parts[$default_language_code]['tell_a_friend'] :
-				isset($default_uri_parts['en']['tell_a_friend']) ?
-				$default_uri_parts['en']['tell_a_friend'] : 'Tell a Friend',
-			'ask_a_question' => isset($default_uri_parts[$default_language_code]['ask_a_question']) ?
-				$default_uri_parts[$default_language_code]['ask_a_question'] :
-				isset($default_uri_parts['en']['ask_a_question']) ?
-				$default_uri_parts['en']['ask_a_question'] : 'Ask a Question'
+            'product_reviews' => $default_uri_parts[$default_language_code]['product_reviews'] ?? ($default_uri_parts['en']['product_reviews'] ?? 'Reviews'),
+            'product_reviews_info' => $default_uri_parts[$default_language_code]['product_reviews_info'] ?? ($default_uri_parts['en']['product_reviews_info'] ?? 'Review'),
+            'product_reviews_write' => $default_uri_parts[$default_language_code]['product_reviews_write'] ?? ($default_uri_parts['en']['product_reviews_write'] ?? 'Write a Review'),
+            'tell_a_friend' => $default_uri_parts[$default_language_code]['tell_a_friend'] ?? ($default_uri_parts['en']['tell_a_friend'] ?? 'Tell a Friend'),
+            'ask_a_question' => $default_uri_parts[$default_language_code]['ask_a_question'] ?? ($default_uri_parts['en']['ask_a_question'] ?? 'Ask a Question')
         ];
 		
 		// Populate any missing URI parts for any language
