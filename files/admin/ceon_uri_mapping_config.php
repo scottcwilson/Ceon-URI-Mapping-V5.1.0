@@ -1,5 +1,5 @@
 <?php
-//steve css select disabled
+
 /**
  * Ceon URI Mapping Configuration Utility HTML Output Page.
  *
@@ -83,7 +83,7 @@ $config_utility = new CeonURIMappingConfigUtility();
         fieldset fieldset {
             margin-top: 1em;
             background: #f3f3f3;
-            box-shadow: inset 0px 0px 8px 1px #e3e3e3;
+            box-shadow: inset 0 0 8px 1px #e3e3e3;
         }
 
         fieldset.CeonPanel fieldset legend {
@@ -122,7 +122,7 @@ $config_utility = new CeonURIMappingConfigUtility();
 
         ul#ceon-panels-menu li a:visited, ul#ceon-panels-menu li a:active,
         ul#ceon-panels-menu li a:focus {
-            outline: none;
+            outline-style: none;
         }
 
         ul#ceon-panels-menu li.CeonPanelTabSelected {
@@ -147,7 +147,7 @@ $config_utility = new CeonURIMappingConfigUtility();
         ul#ceon-panels-menu li.CeonPanelTabSelected a:visited,
         ul#ceon-panels-menu li.CeonPanelTabSelected a:active,
         ul#ceon-panels-menu li.CeonPanelTabSelected a:focus {
-            outline: none;
+            outline-style: none;
         }
 
         #ceon-panels-wrapper {
@@ -192,7 +192,7 @@ $config_utility = new CeonURIMappingConfigUtility();
         }
 
         .ErrorIntro {
-            margin: 0em 0 1.5em 0em;
+            margin: 0 0 1.5em 0;
             background: #f00;
             color: #fff;
             padding: 0.4em;
@@ -265,7 +265,7 @@ $config_utility = new CeonURIMappingConfigUtility();
 
         #footer p#version-info {
             padding: 0;
-            line-height: 1.3
+            line-height: 1.3;
         }
 
         #footer p.Error {
