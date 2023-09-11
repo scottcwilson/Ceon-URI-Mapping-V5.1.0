@@ -160,7 +160,8 @@ class CeonString
 		if (strlen($input) < 16777216 ||
 				(!CeonString::extensionExists('iconv') && !CeonString::extensionExists('mbstring'))) {
 			if ($from_ascii && ($to == 'utf-8')) {
-				return utf8_encode($input);
+
+                return $input;
 			}
 			
 			if (($from == 'utf-8') && $to_ascii) {
