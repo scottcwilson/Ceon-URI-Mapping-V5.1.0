@@ -13,6 +13,8 @@
  * @version     $Id: ceon_uri_mapping_installation_check.php 1027 2012-07-17 20:31:10Z conor $
  */
 
+define('TEXT_EDITION_TITLE', 'UMM Edition');
+
 define('HEADING_TITLE', 'Ceon URI Mapping Installation Check');
 
 define('TEXT_INSTALLATION_CHECK', 'Installation Check');
@@ -257,7 +259,7 @@ define('TEXT_PLACE_REWRITE_RULE_HTACCESS_FILE_INFO_SUBDIR', 'Although the store 
 
 define('TEXT_PLACE_REWRITE_RULE_VIRTUALHOST_DIRECTIVE_TITLE', 'If using an Apache VirtualHost Directive');
 define('TEXT_PLACE_REWRITE_RULE_VIRTUALHOST_DIRECTIVE_INFO', 'If the store runs on a server using Apache and it is possible to modify the VirtualHost Directive for the store, then the rule can be modified and entered into the VirtualHost Directive for the store.');
-define('TEXT_PLACE_REWRITE_RULE_VIRTUALHOST_DIRECTIVE_INSTRUCTIONS', 'Simply add a slash to the front of <code>%s</code>, to make the rule compatible with the VirtualHost Directive: <br/><br /><code>%s</code>');
+define('TEXT_PLACE_REWRITE_RULE_VIRTUALHOST_DIRECTIVE_INSTRUCTIONS', 'Simply add a slash to the front of <code>%s</code>, to make the rule compatible with the VirtualHost Directive: <br /><br /><code>%s</code>');
 
 define('TEXT_IIS_ISAPI_REWRITE_TITLE', 'IIS Server with IIS ISAPI_Rewrite');
 define('TEXT_SERVER_APPEARS_TO_BE_IIS_ISAPI_REWRITE', 'The server appears to be using the Micro$oft IIS webserver with the ISAPI_Rewrite module.');

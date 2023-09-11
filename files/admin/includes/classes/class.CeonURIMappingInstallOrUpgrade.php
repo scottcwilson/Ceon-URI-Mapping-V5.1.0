@@ -52,7 +52,7 @@ class CeonURIMappingInstallOrUpgrade
 	/**
 	 * Tracks if any updates were performed.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_actions_performed = false;
@@ -60,7 +60,7 @@ class CeonURIMappingInstallOrUpgrade
 	/**
 	 * Tracks if the URI mappings table has just been created.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_uri_mappings_table_created = false;
@@ -68,7 +68,7 @@ class CeonURIMappingInstallOrUpgrade
 	/**
 	 * Tracks if the configs table has just been created.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_uri_mapping_configs_table_created = false;
@@ -76,7 +76,7 @@ class CeonURIMappingInstallOrUpgrade
 	/**
 	 * Tracks if the product related pages URI parts table has just been created.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_uri_mapping_prp_uri_parts_table_created = false;
@@ -87,7 +87,7 @@ class CeonURIMappingInstallOrUpgrade
 	 * @var     array
 	 * @access  public
 	 */
-	public $error_messages = array();
+	public $error_messages = [];
 	
 	// }}}
 	
@@ -99,10 +99,10 @@ class CeonURIMappingInstallOrUpgrade
 	 * options.
 	 * 
 	 * @access  public
-	 * @param   string    $version   The version of the module.
-	 * @param   string    $installed_version   The currently installed version of the module.
+	 * @param  string  $version   The version of the module.
+	 * @param  string  $installed_version   The currently installed version of the module.
 	 */
-	public function __construct($version, $installed_version)
+	public function __construct(string $version, string $installed_version)
 	{
 		global $db;
 		
@@ -173,10 +173,10 @@ class CeonURIMappingInstallOrUpgrade
 	 * Simply returns whether or not any action was performed during the running of this instance.
 	 *
 	 * @access  public
-	 * @return  boolean   Whether or not any action was performed.
+	 * @return  bool   Whether or not any action was performed.
 	 */
-	public function actionPerformed()
-	{
+	public function actionPerformed(): bool
+    {
 		return $this->_actions_performed;		
 	}
 	
@@ -189,10 +189,10 @@ class CeonURIMappingInstallOrUpgrade
 	 * Makes sure that the database tables exist. Creates any that don't.
 	 *
 	 * @access  protected
-	 * @return  boolean   False if a problem occurred when creating a database table, true otherwise.
+	 * @return  bool   False if a problem occurred when creating a database table, true otherwise.
 	 */
-	protected function _checkCreateDatabases()
-	{
+	protected function _checkCreateDatabases(): bool
+    {
 		global $db, $messageStack;
 		
 		// Add the URI Mappings table if it doesn't exist
@@ -366,16 +366,16 @@ class CeonURIMappingInstallOrUpgrade
 		$languages = zen_get_languages();
 		
 		// Check if URI parts are missing for any language
-		$page_types = array(
+		$page_types = [
 			'product_reviews',
 			'product_reviews_info',
 			'product_reviews_write',
 			'tell_a_friend',
 			'ask_a_question'
-			);
+        ];
 		
 		// Variable holds the list of URIs parts for each language as currently specified in the database
-		$current_uri_parts = array();
+		$current_uri_parts = [];
 		
 		$current_uri_parts_sql = "
 			SELECT
@@ -391,7 +391,7 @@ class CeonURIMappingInstallOrUpgrade
 		
 		while (!$current_uri_parts_result->EOF) {
 			if (!isset($current_uri_parts[$current_uri_parts_result->fields['language_code']])) {
-				$current_uri_parts[$current_uri_parts_result->fields['language_code']] = array();
+				$current_uri_parts[$current_uri_parts_result->fields['language_code']] = [];
 			}
 			
 			$current_uri_parts[$current_uri_parts_result->fields['language_code']]
@@ -434,7 +434,7 @@ class CeonURIMappingInstallOrUpgrade
 		
 		// Variable holds the list of URIs parts for each language as defined in the language 
 		// definition files for each language
-		$default_uri_parts = array();
+		$default_uri_parts = [];
 		
 		// Attempt to get the specific defines for each store the language uses
 		for ($i = 0, $n = count($languages); $i < $n; $i++) {
@@ -446,7 +446,7 @@ class CeonURIMappingInstallOrUpgrade
 			if (file_exists(DIR_WS_LANGUAGES . $language_name . 'ceon_uri_mapping_default_uri_parts.php')) {
 				include_once (DIR_WS_LANGUAGES . $language_name . 'ceon_uri_mapping_default_uri_parts.php');
 				
-				$default_uri_parts[$language_code_lower] = array();
+				$default_uri_parts[$language_code_lower] = [];
 				
 				foreach ($page_types as $page_type) {
 					if (defined('DEFAULT_URI_PART_' . strtoupper($page_type) . $language_code_upper)) {
@@ -461,8 +461,8 @@ class CeonURIMappingInstallOrUpgrade
 		// If the store's default language is missing any defines, defines for English are used. If English defines
 		// aren't found, English is used, hard-coded here
 		$default_language_code = strtolower(DEFAULT_LANGUAGE);
-		
-		$fallback_defines = array(
+
+        $fallback_defines = [
 			'product_reviews' =>
 				isset($default_uri_parts[$default_language_code]['product_reviews']) ?
 				$default_uri_parts[$default_language_code]['product_reviews'] :
@@ -486,14 +486,14 @@ class CeonURIMappingInstallOrUpgrade
 				$default_uri_parts[$default_language_code]['ask_a_question'] :
 				isset($default_uri_parts['en']['ask_a_question']) ?
 				$default_uri_parts['en']['ask_a_question'] : 'Ask a Question'
-			);
+        ];
 		
 		// Populate any missing URI parts for any language
 		for ($i = 0, $n = count($languages); $i < $n; $i++) {
 			$language_code = strtolower($languages[$i]['code']);
 			
 			if (!isset($default_uri_parts[$language_code])) {
-				$default_uri_parts[$language_code] = array();
+				$default_uri_parts[$language_code] = [];
 			}
 			
 			foreach ($page_types as $page_type) {
@@ -562,10 +562,10 @@ class CeonURIMappingInstallOrUpgrade
 	 * Makes sure that the database tables are up to date.
 	 *
 	 * @access  protected
-	 * @return  boolean   False if a problem occurred when updating a database table, true otherwise.
+	 * @return  bool   False if a problem occurred when updating a database table, true otherwise.
 	 */
-	protected function _ensureDatabaseIsUpToDate()
-	{
+	protected function _ensureDatabaseIsUpToDate(): bool
+    {
 		global $db;
 		
 		// If a problem occurs trying to update a table, take note but continue to try and update any other table,
@@ -601,14 +601,14 @@ class CeonURIMappingInstallOrUpgrade
 	 * really old versions.
 	 *
 	 * @access  protected
-	 * @return  boolean   Whether or not the database table is up to date.
+	 * @return  bool   Whether or not the database table is up to date.
 	 */
 	protected function _checkUpdateURIMappingsTable()
 	{
 		global $db, $messageStack;
 		
 		// Get the list of columns in the database table
-		$columns = array();
+		$columns = [];
 		
 		$columns_query = 'SHOW COLUMNS FROM ' . TABLE_CEON_URI_MAPPINGS . ';';
 		$columns_result = $db->Execute($columns_query);
@@ -643,7 +643,7 @@ class CeonURIMappingInstallOrUpgrade
 			$columns_query = 'SHOW COLUMNS FROM ' . TABLE_CEON_URI_MAPPINGS . ';';
 			$columns_result = $db->Execute($columns_query);
 			
-			$columns = array();
+			$columns = [];
 			
 			while (!$columns_result->EOF) {
 				$columns[] = $columns_result->fields['Field'];
@@ -750,7 +750,7 @@ class CeonURIMappingInstallOrUpgrade
 			$columns_query = 'SHOW COLUMNS FROM ' . TABLE_CEON_URI_MAPPINGS . ';';
 			$columns_result = $db->Execute($columns_query);
 			
-			$columns = array();
+			$columns = [];
 			
 			while (!$columns_result->EOF) {
 				$columns[] = $columns_result->fields['Field'];
@@ -823,7 +823,7 @@ class CeonURIMappingInstallOrUpgrade
 		$indexes_exist_query = 'SHOW INDEXES FROM ' . TABLE_CEON_URI_MAPPINGS . ';';
 		$indexes_exist_result = $db->Execute($indexes_exist_query);
 		
-		$indexes = array();
+		$indexes = [];
 		
 		while (!$indexes_exist_result->EOF) {
 			$indexes[] = $indexes_exist_result->fields['Column_name'];
@@ -855,10 +855,10 @@ class CeonURIMappingInstallOrUpgrade
 		if (isset($version_4_updated)) {
 			$messageStack->add('Mappings database table successfully updated from old version 4.x format.',
 				'success');
-		} else if (isset($version_3_updated)) {
+		} elseif (isset($version_3_updated)) {
 			$messageStack->add('Mappings database table successfully updated from old version 3.x format.',
 				'success');
-		} else if (isset($version_2_updated)) {
+		} elseif (isset($version_2_updated)) {
 			$messageStack->add('Mappings database table successfully updated from old version 2.x format.',
 				'success');
 		}
@@ -907,13 +907,13 @@ class CeonURIMappingInstallOrUpgrade
 				
 				$selection_query_part = "category_id = '" . $uri_mappings_result->fields['category_id'] . "'";
 				
-			} else if (!is_null($uri_mappings_result->fields['product_id'])) {
+			} elseif (!is_null($uri_mappings_result->fields['product_id'])) {
 				$main_page = $uri_mappings_result->fields['type_handler'] . '_info';
 				$associated_db_id = $uri_mappings_result->fields['product_id'];
 				
 				$selection_query_part = "product_id = '" . $uri_mappings_result->fields['product_id'] . "'";
 				
-			} else if (!is_null($uri_mappings_result->fields['page_id'])) {
+			} elseif (!is_null($uri_mappings_result->fields['page_id'])) {
 				$main_page = FILENAME_EZPAGES;
 				$associated_db_id = $uri_mappings_result->fields['page_id'];
 				
@@ -942,24 +942,24 @@ class CeonURIMappingInstallOrUpgrade
 					$uri_mapping .= '/';
 				}
 				
-				$sql_data_array = array(
+				$sql_data_array = [
 					'language_id' => $uri_mappings_result->fields['language_id'],
 					'current_uri' => 1,
 					'associated_db_id' => $associated_db_id,
 					'alternate_uri' => 'null',
 					'redirection_type_code' => '301',
 					'date_added' => $uri_mappings_result->fields['date_added']
-					);
+                ];
 				
 				require_once(DIR_WS_FUNCTIONS . 'ceon_uri_mapping_products.php');
 				
-				$page_types = array(
+				$page_types = [
 					'product_reviews',
 					'product_reviews_info',
 					'product_reviews_write',
 					'tell_a_friend',
 					'ask_a_question'
-					);
+                ];
 				
 				// Get the language code for the mapping's language
 				for ($i = 0, $n = count($languages); $i < $n; $i++) {
@@ -1089,14 +1089,14 @@ class CeonURIMappingInstallOrUpgrade
 	 * Adds any columns which are missing from the configs table and removes an unneeded column.
 	 *
 	 * @access  protected
-	 * @return  boolean   Whether or not the database table is up to date.
+	 * @return  bool   Whether or not the database table is up to date.
 	 */
 	protected function _checkUpdateConfigsTable()
 	{
 		global $db, $messageStack;
 		
 		// Get the list of columns in the database table
-		$columns = array();
+		$columns = [];
 		
 		$columns_query = 'SHOW COLUMNS FROM ' . TABLE_CEON_URI_MAPPING_CONFIGS . ';';
 		$columns_result = $db->Execute($columns_query);
@@ -1132,7 +1132,7 @@ class CeonURIMappingInstallOrUpgrade
 		$columns_query = 'SHOW COLUMNS FROM ' . TABLE_CEON_URI_MAPPING_CONFIGS . ';';
 		$columns_result = $db->Execute($columns_query);
 		
-		$columns = array();
+		$columns = [];
 		
 		while (!$columns_result->EOF) {
 			$columns[] = $columns_result->fields['Field'];
@@ -1361,7 +1361,7 @@ class CeonURIMappingInstallOrUpgrade
 		
 		$orig_remove_words = explode(',', $remove_words);
 		
-		$new_remove_words = array();
+		$new_remove_words = [];
 		
 		for ($i = 0, $n = count($orig_remove_words); $i < $n; $i++) {
 			$orig_remove_words[$i] = trim($orig_remove_words[$i]);
@@ -1396,7 +1396,7 @@ class CeonURIMappingInstallOrUpgrade
 	 * either is missing, it is created.
 	 *
 	 * @access  protected
-	 * @return  boolean   Whether or not the configuration group and option are present and valid.
+	 * @return  bool   Whether or not the configuration group and option are present and valid.
 	 */
 	protected function _checkZenCartConfigGroupAndOption()
 	{
@@ -1648,11 +1648,11 @@ class CeonURIMappingInstallOrUpgrade
 	 * Checks if the current database user has a particular privilege type for the store's database.
 	 *
 	 * @access  protected
-	 * @param   string    $privilege_type   The type of privilege to be checked for.
-	 * @return  boolean   Whether or not the current database user has the specified privilege.
+	 * @param  string  $privilege_type   The type of privilege to be checked for.
+	 * @return  bool   Whether or not the current database user has the specified privilege.
 	 */
-	protected function _DBUserHasPrivilege($privilege_type)
-	{
+	protected function _DBUserHasPrivilege(string $privilege_type): bool
+    {
 		global $db;
 		
 		if (isset($_GET['override-db-privileges-check'])) {

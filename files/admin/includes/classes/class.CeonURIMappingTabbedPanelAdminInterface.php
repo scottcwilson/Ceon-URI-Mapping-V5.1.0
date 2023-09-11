@@ -85,7 +85,7 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	/**
 	 * The start year of the copyright range for the module.
 	 *
-	 * @var     integer
+	 * @var     int
 	 * @access  protected
 	 */
 	protected $_copyright_start_year = null;
@@ -101,7 +101,7 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	/**
 	 * Whether or not automatic version checking is enabled.
 	 *
-	 * @var     boolean
+	 * @var     bool
 	 * @access  protected
 	 */
 	protected $_automatic_version_checking = null;
@@ -112,7 +112,7 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	 * @var     array
 	 * @access  protected
 	 */
-	protected $_panels = array();
+	protected $_panels = [];
 	
 	/**
 	 * The HTML output built by this instance.
@@ -130,7 +130,7 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	/**
 	 * Creates a new instance of the class.
 	 * 
-	 * @param   boolean   Whether or not the autogeneration configuration should be loaded when
+	 * @param  bool   Whether or not the autogeneration configuration should be loaded when
 	 *                    instantiating the class.
 	 * @access  public
 	 */
@@ -158,7 +158,7 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	 *
 	 * @access  protected
 	 * @abstract
-	 * @return  boolean   True if the version number check completed without failure, false otherwise. The module
+	 * @return  bool   True if the version number check completed without failure, false otherwise. The module
 	 *                    not being installed yet is not counted as a failure.
 	 */
 	protected function _lookUpInstalledVersion() {}
@@ -229,12 +229,12 @@ class CeonURIMappingTabbedPanelAdminInterface extends CeonURIMappingAdmin
 	 */
 	protected function _addPanel($id, $title, $link, $content = null)
 	{
-		$this->_panels[] = array(
+		$this->_panels[] = [
 			'id' => $id,
 			'title' => $title,
 			'link' => $link,
 			'content' => $content
-			);
+        ];
 	}
 	
 	// }}}
@@ -599,7 +599,7 @@ TABBED_PANELS_MENU_JS;
 				
 				$output_manual_link = true;
 				
-			} else if ($version_checker_response == '1') {
+			} elseif ($version_checker_response == '1') {
 				// Version is up to date
 				$_SESSION[$this->_ceon_base_model_code . '_vc_response'] = $version_checker_response;
 				
@@ -613,7 +613,7 @@ TABBED_PANELS_MENU_JS;
 				
 				$output .= '</p>';
 				
-			} else if (substr($version_checker_response, 0, 1) == '-') {
+			} elseif (substr($version_checker_response, 0, 1) == '-') {
 				// Error occurred looking up version number
 				$_SESSION[$this->_ceon_base_model_code . '_vc_response'] = $version_checker_response;
 				
@@ -623,7 +623,7 @@ TABBED_PANELS_MENU_JS;
 				
 				$output_manual_link = true;
 				
-			} else if (preg_match('/^[0-9]+\.[0-9]+\.[0-9]+[^,]*,/', $version_checker_response)) {
+			} elseif (preg_match('/^[0-9]+\.[0-9]+\.[0-9]+[^,]*,/', $version_checker_response)) {
 				// Version is out of date, display latest version info and download link
 				$_SESSION[$this->_ceon_base_model_code . '_vc_response'] = $version_checker_response;
 				
