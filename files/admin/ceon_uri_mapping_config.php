@@ -94,13 +94,12 @@ $config_utility = new CeonURIMappingConfigUtility();
             margin: 1em 0 0 0;
             padding: 0 0 0.6em 0;
             background: #599659;
-            white-space: nowrap;
         }
 
         ul#ceon-panels-menu li {
-            display: inline;
+            display: inline-block;
             padding: 0;
-            margin: 0;
+            margin-bottom: 1em;
         }
 
         ul#ceon-panels-menu li a {
@@ -125,7 +124,6 @@ $config_utility = new CeonURIMappingConfigUtility();
         }
 
         ul#ceon-panels-menu li.CeonPanelTabSelected {
-            display: inline;
             padding: 0;
         }
 
