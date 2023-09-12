@@ -4,7 +4,7 @@
  * Ceon URI Mapping Configuration Utility HTML Output Page.
  *
  * Builds the main Zen Cart output HTML then instantiates and outputs the Config Utility's output.
- * 
+ *
  * @package     ceon_uri_mapping
  * @author      Conor Kerr <zen-cart.uri-mapping@ceon.net>
  * @copyright   Copyright 2008-2019 Ceon
@@ -13,7 +13,8 @@
  * @link        http://ceon.net/software/business/zen-cart/uri-mapping
  * @license     http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version     $Id: ceon_uri_mapping_config.php 1027 2012-07-17 20:31:10Z conor $
- */
+ * @updated     torvista 2023-09-12
+*/
 
 require('includes/application_top.php');
 
@@ -24,9 +25,7 @@ $num_languages = count($languages);
  * Load in the Ceon URI Mapping Config Utility class
  */
 require_once(DIR_WS_CLASSES . 'class.CeonURIMappingConfigUtility.php');
-
 $config_utility = new CeonURIMappingConfigUtility();
-
 ?>
 <!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
@@ -95,13 +94,12 @@ $config_utility = new CeonURIMappingConfigUtility();
             margin: 1em 0 0 0;
             padding: 0 0 0.6em 0;
             background: #599659;
-            white-space: nowrap;
         }
 
         ul#ceon-panels-menu li {
-            display: inline;
+            display: inline-block;
             padding: 0;
-            margin: 0;
+            margin-bottom: 1em;
         }
 
         ul#ceon-panels-menu li a {
@@ -126,7 +124,6 @@ $config_utility = new CeonURIMappingConfigUtility();
         }
 
         ul#ceon-panels-menu li.CeonPanelTabSelected {
-            display: inline;
             padding: 0;
         }
 
@@ -153,9 +150,12 @@ $config_utility = new CeonURIMappingConfigUtility();
         #ceon-panels-wrapper {
             border: 1px solid #599659;
             background: #599659;
-            padding: 1em;
-            padding-top: 1.4em;
+            padding: 1.4em 1em 1em;
             margin-bottom: 0.8em;
+        }
+
+        .DisplayNone {
+            display: none;
         }
 
         .CeonFormItemLabel, .CeonFormItemField, .CeonFormItemDesc {
@@ -241,7 +241,7 @@ $config_utility = new CeonURIMappingConfigUtility();
             margin-right: 1em;
         }
 
-        #footer {
+        #footerCeon {
             margin-top: 1.5em;
             border-top: 1px solid #000;
             padding-top: 1em;
@@ -250,7 +250,7 @@ $config_utility = new CeonURIMappingConfigUtility();
             padding-bottom: 2em;
         }
 
-        #footer img {
+        #footerCeon img {
             border: none;
         }
 
@@ -259,16 +259,16 @@ $config_utility = new CeonURIMappingConfigUtility();
             margin-right: 14px;
         }
 
-        #footer p {
+        #footerCeon p {
             margin: 0 0 0.8em 0;
         }
 
-        #footer p#version-info {
+        #footerCeon p#version-info {
             padding: 0;
             line-height: 1.3;
         }
 
-        #footer p.Error {
+        #footerCeon p.Error {
             font-size: 1.1em;
         }
     </style>
@@ -277,18 +277,14 @@ $config_utility = new CeonURIMappingConfigUtility();
 <!-- header //-->
 <?php require DIR_WS_INCLUDES . 'header.php'; ?>
 <!-- header_eof //-->
+
 <!-- body //-->
 <div id="ceon-uri-mapping-wrapper">
-<?php echo zen_draw_form('ceon-uri-mapping', FILENAME_CEON_URI_MAPPING_CONFIG, zen_get_all_get_params(), 'post',
-	'onsubmit="" id="ceon-uri-mapping"', true);
-echo zen_hide_session_id(); ?>
-	<h1 class="pageHeading CeonAdminPageHeading"><?php echo HEADING_TITLE; ?></h1>
-
-<?php
-
-echo $config_utility->getOutput();
-echo '</form>'; //steve
-?>
+<?php echo zen_draw_form('ceon-uri-mapping', FILENAME_CEON_URI_MAPPING_CONFIG, zen_get_all_get_params(), 'post', 'onsubmit="" id="ceon-uri-mapping"', true);
+    echo zen_hide_session_id(); ?>
+    <h1 class="pageHeading CeonAdminPageHeading"><?php echo HEADING_TITLE; ?></h1>
+    <?php echo $config_utility->getOutput();
+    echo '</form>'; ?>
 </div>
 <!-- body_eof //-->
 
